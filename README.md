@@ -1,6 +1,8 @@
 # Projeto Industrial 2019/20 - Grupo 3
 ###### (Eu vou melhorar este documento à medida que se vai progredindo no projeto)
 
+## NOTA: Ao fazer update a código, fazer num branch novo!
+
 ### Tarefas propostas para quarentena
 **Lourenço**
 ```
