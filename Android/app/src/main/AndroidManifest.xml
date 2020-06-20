@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UpdatePassword">
+        <activity android:name=".UpdatePasswordActivity">
         </activity>
         <activity android:name=".ForgotPasswordActivity">
         </activity>

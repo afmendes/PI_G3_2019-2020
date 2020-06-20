@@ -21,8 +21,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * create notification and queue serial data while activity is not in the foreground
- * use listener chain: SerialSocket -> SerialService -> UI fragment
+ * #SerialService
+ *
+ * This service creates notification and queues serial data while activity is not in the foreground.
+ *
+ * Uses listener chain: SerialSocket -> SerialService -> UI fragment.
  */
 public class SerialService extends Service implements SerialListener {
 
@@ -49,7 +52,7 @@ public class SerialService extends Service implements SerialListener {
     private boolean connected;
 
     /**
-     * Lifecylce
+     * Lifecycle
      */
     public SerialService() {
         mainLooper = new Handler(Looper.getMainLooper());

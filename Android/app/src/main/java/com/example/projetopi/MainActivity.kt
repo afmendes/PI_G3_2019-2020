@@ -2,7 +2,6 @@ package com.example.projetopi
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -20,7 +19,52 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-
+/**
+ * Activity where the chart is displayed with the data obtained from the Firebase database
+ *
+ * Here the Users sees the data from the modules and can select which data to visualize,
+ * and if it wants to see it by the hour, daily or by months (needs to be implemented).
+ *
+ * # Main Activity
+ *
+ * If the account in which the user connected isn't available, this activity is redirected to
+ * [AddDeviceActivity]
+ *
+ * @property auth Reference to the current user
+ * @property ref Reference to the current user data
+ *
+ * @property logoutBtn Button to logout from the current session
+ * @property updatePass Button to update the password of the current user
+ *
+ * @property hourBtn Button to change the chart display to hours data sets
+ * @property dayBtn Button to change the chart display to days data sets
+ * @property monthBtn Button to change the chart display to months data sets
+ *
+ * @property airHumSw Switch to deactivate/activate the air humidity data
+ * @property batChargeSw Switch to deactivate/activate the battery charge data
+ * @property lumSw Switch to deactivate/activate the luminosity data
+ * @property soilHumSw Switch to deactivate/activate the soil humidity data
+ * @property tempSw Switch to deactivate/activate the temperature data
+ *
+ * @property lchart LineChart for the chart displayed
+ *
+ * @property flagAirHum Flag used to deactivate/activate the air humidity data display, default value = false
+ * @property flagBatCharge Flag used to deactivate/activate the battery charge data display, default value = false
+ * @property flagLum Flag used to deactivate/activate the luminosity data display, default value = false
+ * @property flagSoilHum Flag used to deactivate/activate the soil humidity data display, default value = false
+ * @property flagTemp Flag used to deactivate/activate the temperature data display, default value = false
+ *
+ * @property airHumExists Flag used to know if the air humidity data exists in the database
+ * @property batChargeExists Flag used to know if the battery charge data exists in the database
+ * @property lumExists Flag used to know if the luminosity data exists in the database
+ * @property soilHumExists Flag used to know if the soil humidity data exists in the database
+ * @property tempExists Flag used to know if the temperature data exists in the database
+ *
+ * @property xAxis X Axis property of lchart LineChart
+ * @property timeArray Time data for the lchart LineChart used as xAxis data
+ *
+ * @property timeFormType Integer user to identify the format of the time data in [MyValueFormatter]
+ */
 class MainActivity : AppCompatActivity() {
     // User Authentication
     private lateinit var auth: FirebaseAuth
@@ -62,11 +106,24 @@ class MainActivity : AppCompatActivity() {
 
     var timeFormType = 0
 
+    /**
+     *
+     * ## On Create function
+     * When this activity is initiated, the app checks if the user account has a module associated,
+     * and if not, the user is redirected to the [AddDeviceActivity] to associate a device via BT
+     * If the user has a module associated, the data available for that module is gathered
+     * from Firebase Database and shown in [lchart]. The user has the option to activate and deactivate
+     * data sets that are available for that module
+     * @param savedInstanceState Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         ref = FirebaseDatabase.getInstance().getReference("users/" + auth.currentUser!!.uid)
 
+        /*
+        Redirects to the LoginActivity if there is no user logged on on Firebase
+         */
         if(auth.currentUser == null){
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -97,11 +154,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         updatePass.setOnClickListener{
-            val intent = Intent(this, UpdatePassword::class.java)
+            val intent = Intent(this, UpdatePasswordActivity::class.java)
             startActivity(intent)
         }
 
-        // TODO: Meter botoes a fazer as médias
+        // TODO: Make bottons do the averages and update the chart
 
         hourBtn.setOnClickListener{
             timeFormType = 0
@@ -184,7 +241,12 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
+        /*
+        */
+        /**
+         * Function addValueEventListener that gathers and updates the data sets according to updates
+         * in the Firebase Database in realtime
+         */
         ref.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 error("Couldn't connect to database")
@@ -305,7 +367,6 @@ class MainActivity : AppCompatActivity() {
                         soilHumSw.visibility = View.VISIBLE
                         tempSw.visibility = View.VISIBLE
                         */
-
                         if(airHumExists && flagAirHum){
                             airHumSw.isChecked = true
                         } else if (!airHumExists){
@@ -364,19 +425,44 @@ class MainActivity : AppCompatActivity() {
 
         })
     }
-    //TODO: Adicionar a lógica para cálculo de médias e total para dias e meses
-    /*
-    type:
-        0 - Hours   -- 06h32
-        1 - Daily   -- 22/May
-        2 - Monthly -- May/2020
+    /**
+     * TODO: Add the logic for the calculations of the averages and totals for days and months
+     *
+     * ## class myValueFormatter
+     * This class is used to format de [xAxis] data to display correctly in the [lchart] axis
+     * @param type Integer used to identify the time data template
+     * @param xValsDateLabel ArrayList<String> with the date information
+     *
+     *
+     *
+     * type:
+     *
+     * 0: Hours   // 06h32
+     *
+     * 1: Daily   // 22/May
+     *
+     * 2: Monthly // May/2020
+     *
+     *
      */
     class MyValueFormatter(private val type: Int , private val xValsDateLabel: ArrayList<String>) : ValueFormatter() {
 
+        /**
+         *
+         * @param value contains the time data value
+         * @return value formatted according to type
+         */
         override fun getFormattedValue(value: Float): String {
             return value.toString()
         }
 
+        /**
+         *
+         *
+         * @param value Value of the time data used in xAxis of [lchart]
+         * @param axis XAxis used in [lchart]
+         * @return Returns the date formatted if it exists, else returns an empty string
+         */
         override fun getAxisLabel(value: Float, axis: AxisBase): String {
             val xDataFormatted = ArrayList<String>()
             for (k in xValsDateLabel){
@@ -418,6 +504,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    /**
+     *
+     * ##Function updatePlot
+     * This function updates the [lchart] plot with all the available with the xAxis data
+     * formatted in the class [MyValueFormatter]. It is run and updates the [lchart] every time
+     * the Firebase Database is updated
+     * @param airHumEntries ArrayList<Entry> with the data entries from air humidity
+     * @param batChargeEntries ArrayList<Entry> with the data entries from battery charge
+     * @param lumEntries ArrayList<Entry> with the data entries from luminosity
+     * @param soilHumEntries ArrayList<Entry> with the data entries from soil humidity
+     * @param tempEntries ArrayList<Entry> with the data entries from temperatures
+     * @param timeArr ArrayList<String> with the data from the dates
+     * @param timeFmType Integer used to identify the time data template
+     */
     fun updatePlot(airHumEntries:ArrayList<Entry>,batChargeEntries:ArrayList<Entry>,lumEntries:ArrayList<Entry>,soilHumEntries:ArrayList<Entry>,tempEntries:ArrayList<Entry>,
                     timeArr:ArrayList<String>, timeFmType:Int){
         val airHumSet = LineDataSet(airHumEntries,"Air Humidity")

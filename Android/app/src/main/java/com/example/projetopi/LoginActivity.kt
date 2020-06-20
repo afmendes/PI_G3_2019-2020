@@ -10,6 +10,11 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * #LoginActivity
+ *
+ * This activity allows the user to login to an account using the Firebase Authentication System.
+ */
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth

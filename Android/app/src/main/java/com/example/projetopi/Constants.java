@@ -1,5 +1,8 @@
 package com.example.projetopi;
 
+/**
+ *
+ */
 class Constants {
 
     // values have to be globally unique

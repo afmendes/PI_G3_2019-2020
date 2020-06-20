@@ -29,16 +29,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
-
-import org.jetbrains.annotations.NotNull;
-
-import kotlin.jvm.internal.Intrinsics;
 
 public class TerminalFragment extends Fragment implements ServiceConnection, SerialListener {
 
@@ -57,7 +49,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private FirebaseAuth auth;
     private DatabaseReference ref;
 
-    /*
+    /**
      * Lifecycle
      */
     @Override
@@ -129,7 +121,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         service = null;
     }
 
-    /*
+    /**
      * UI
      */
     @Override
@@ -191,7 +183,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         }
     }
 
-    /*
+    /**
      * Serial + UI
      */
     private void connect() {
@@ -238,7 +230,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         receiveText.append(spn);
     }
 
-    /*
+    /**
      * SerialListener
      */
     @Override

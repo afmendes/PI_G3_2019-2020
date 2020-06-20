@@ -8,6 +8,14 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
+
+/**
+ * #ForgotPasswordActivity
+ *
+ * This activity allows the user to recover an account password using the Firebase Authentication
+ * System, if the user has access to the email linked to said account.
+ *
+ */
 class ForgotPasswordActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth

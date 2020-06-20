@@ -1,17 +1,18 @@
 package com.example.projetopi
 
-import android.content.Context
 import android.content.Intent
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
-
-//import com.google.firebase.database.*
-
-
+/**
+ * #AddDeviceActivity
+ * This activity directs the user to use the bluetooth to set a connection with the module
+ * and sends the data to the Firebase Database to confirm the successful connection
+ * and redirects the user to the [MainActivity] (needs to be correctly implemented - needs fixes)
+ *
+ */
 class AddDeviceActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
@@ -21,7 +22,13 @@ class AddDeviceActivity : AppCompatActivity() {
 
     //private lateinit var ref: DatabaseReference
 
-
+    /**
+     * On creation, it initiates the [DevicesActivity]
+     *
+     * If the user presses the [logoutBtn] the user is redirected to the [LoginActivity]
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
