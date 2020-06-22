@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Login</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+	<div class="loginbox">
+		<h1>Login Here</h1>
+		<form>
+		  <p>Email</p>
+		  <input type="text" name="" placeholder="Enter email" id="email_field">
+		  <p>Password</p>
+		  <input type="password" name="" placeholder="Enter password" id="pass_field">
+		  <input type="submit" name="" id="btn-login" value="Login" formtarget= "_blank" onclick="login()" readonly>
+		  <a href="#">Lost your password?</a><br>
+          <input type="submitB" name="" value ="Back" formtarget="_blank" onclick="window.top.location.href='HomePage.html' " readonly> 
+		</form>
+	</div>  
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+     <script src="form.js"></script>   
+</body>
+</html>

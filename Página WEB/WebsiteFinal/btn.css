@@ -1,0 +1,60 @@
+body{
+	margin: 0;
+	padding: 0;
+	background: url(home.jpg);
+	background-size: cover;
+	background-position: center;
+	font-family: sans-serif;
+}
+
+
+input[type="submitL"]{
+	border: none;
+	outline: none;
+	height: 40px;
+    width: 90px;
+	background: #fff;
+	color: #000;
+	font-size: 20px;
+	border-radius: 20px;
+    top: 45%;
+	left: 47%;
+    position: absolute;
+    text-align: center;
+    
+}
+
+
+input[type="submitL"]:hover
+{
+	cursor: pointer;
+	background: #000;
+	color: #fff;
+}
+
+input[type="submitI"]{
+	border: none;
+	outline: none;
+	height: 40px;
+    width: 90px;
+	background: #fff;
+	color: #000;
+	font-size: 20px;
+	border-radius: 20px;
+    top: 55%;
+	left: 47%;
+    position: absolute;
+    text-align: center;
+    
+}
+
+
+input[type="submitI"]:hover
+{
+	cursor: pointer;
+	background: #000;
+	color: #fff;
+}
+
+
+

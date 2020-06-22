@@ -1,0 +1,49 @@
+<html>
+    <head>
+    <script src="plotly.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-database.js"></script>
+
+    </head>
+    <body>
+    <div class="navbar"><span><center>Soil Humidity</center></span></div>
+    <div class="wrapper">
+        <div id="chart"></div>
+        <script>
+
+        	var FirebaseRef = new Firebase("https://projetopi-a6e3d.firebaseio.com/");
+        	var userRef = FirebaseRef.child('users');
+        	var userUID = firebase.auth().currentUser.uid;
+        	var node = userRef.child(userUID);
+        	
+            function getData() {
+            	var humRef = node.child('soilHumidity');
+                var keys = Object.keys(humRef);
+                for(var i = 0; i < keys.length; i++){
+                	var key = keys[i];
+                	var humArray = humRef[key];
+                }
+                return humArray;
+            }  
+            Plotly.plot('chart',[{
+                y:[getData()],
+                type:'line'
+            }]);
+            
+            var cnt = 0;
+            setInterval(function(){
+                Plotly.extendTraces('chart',{ y:[[getData()]]}, [0]);
+                cnt++;
+                if(cnt > 500) {
+                    Plotly.relayout('chart',{
+                        xaxis: {
+                            range: [cnt-500,cnt]
+                        }
+                    });
+                }
+            },3000);
+        </script>
+    </div>
+    </body>
+</html>
