@@ -13,12 +13,13 @@ Implementação bluetooth e wi-fi (controlador)
 ```
 Desenvolvimento do esquema da app
 Implementação bluetooth (mobile app)
-Implementação/Investigação de base de dados (Azure SQL?)
+Implementação/Investigação de base de dados (Firebase)
 ```
  
 **Ventuzelos**
 ```
 Sensorização (com um sensor de humidade do solo obter valor em AC)
+Implementação da base de dados através de uma webpage (Firebase)
 ```
  
 **Cristina**
@@ -29,5 +30,5 @@ Design 3D
 **João**
 ```
 desenvolvimento de software para o microcontrolador (controlo e armazenamento de dados)
-Implementação/Investigação de base de dados (Azure SQL?)
+Implementação/Investigação da base de dados através da esp32(Firebase)
 ```
